@@ -1,0 +1,51 @@
+<h2>Upload Contacts</h2>
+
+<p>Please enter the name of the header in the CSV according to the following fields</p>
+<%= form_tag csv_file_uploads_path, multipart: true do %>
+  <%= text_field_tag :name, nil,placeholder: 'Name', required: true%> 
+  <%= text_field_tag :dob, nil,placeholder: 'Date of Birth', :required => true%>
+  <%= text_field_tag :phone, nil,placeholder: 'Phone', :required => true%>
+  <%= text_field_tag :address, nil,placeholder: 'Address', :required => true%>
+  <%= text_field_tag :credit_card, nil,placeholder: 'Credit Cart', :required => true%>
+  <%= text_field_tag :email, nil,placeholder: 'Email', :required => true%>
+    <br>
+    <br>
+  <%= file_field_tag :file, :accept => 'text/csv'%>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<br>
+
+<h2>Uploaded Files</h2>
+
+<table class="table table-striped small">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Created By</th>
+      <th scope="col">Status</th>
+      <th scope="col">URL</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+    <% @csvs.each do |b| %>
+      <tr>
+        <td>
+          <%= b.created_at.strftime("%F %r") %>
+        </td>
+        <td>
+          <%= b.user.email%>
+        </td>
+         <td>
+          <%= b.status%>
+        </td>
+        <td>
+          <%= link_to "Uploaded file", b.csv.url %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @csvs, param_name: 'csvs_pg' %>

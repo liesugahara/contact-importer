@@ -1,0 +1,53 @@
+<h2>Not Imported</h2>
+
+<table class="table table-striped small">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Date of Birth</th>
+      <th scope="col">Phone Number</th>
+      <th scope="col">Address</th>
+      <th scope="col">Credit Card</th>
+      <th scope="col">Franchise</th>
+      <th scope="col">Email</th>
+      <th scope="col">Errors</th>
+    </tr>
+  </thead>
+  <tbody>
+       
+
+    <% @contacts.each do |c| %>
+      <tr>
+        <td>
+          <%= c.name%>
+        </td>
+        <td>
+          <%= c.dob.to_s.to_date %>
+        </td>
+        <td>
+          <%= c.phone%>
+        </td>
+         <td>
+          <%= c.address%>
+        </td>
+        <td>
+          ****<%= c.credit_card[-4..-1] %>
+        </td>
+        <td>
+          <%= c.franchise %>
+        </td>
+        <td>
+          <%= c.email %>
+        </td>
+        <td>
+          <% JSON.parse(c.status).each do |s| %>
+          <ul> 
+            <li><%=s%></li>
+          </ul>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @contacts, param_name: 'c_pg' %>
